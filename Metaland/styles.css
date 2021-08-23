@@ -1,0 +1,142 @@
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+.mapboxgl-popup {
+    max-width: 250px;
+    max-height: 300px;
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.mapboxgl-popup-content h1 {
+    position: absolute;
+    width: 240px;
+    height: 75px;
+    top: -300px;
+    left: -110px;
+    padding: 10px 0;
+    background: #8ACEFF;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    border-radius: 25px 25px 0px 0px;
+    text-align: center;
+}
+
+.mapboxgl-popup-content h2 {
+    position: absolute;
+    width: 240px;
+    height: 45px;
+    padding: 10px 0;
+    top: -255px;
+    left: -110px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.mapboxgl-popup-content h3 {
+    position: absolute;
+    width: 240px;
+    height: 69px;
+    padding: 20px 0;
+    top: -225px;
+    left: -110px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    box-sizing: border-box;
+    font-size: 24px;
+    text-align: center;
+}
+
+.mapboxgl-popup-content h4 {
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    padding: 20px 0;
+    top: -150px;
+    left: -110px;
+    background: #FFFFFF;
+    border-style: solid;
+    border-width: 2px 2px 1px 2px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.mapboxgl-popup-content h5 {
+    position: absolute;
+    width: 120px;
+    height: 70px;
+    padding: 20px 0;
+    top: -150px;
+    left: 10px;
+    background: #FFFFFF;
+    border-style: solid;
+    border-width: 2px 2px 2px 1px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/*.mapboxgl-popup-content h1 {*/
+/*    position: absolute;*/
+/*    width: 240px;*/
+/*    height: 75px;*/
+/*    top: 35px;*/
+/*    padding: 10px 0;*/
+/*    background: #8ACEFF;*/
+/*    border: 2px solid #000000;*/
+/*    box-sizing: border-box;*/
+/*    border-radius: 25px 25px 0px 0px;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.mapboxgl-popup-content h2 {*/
+/*    position: absolute;*/
+/*    width: 240px;*/
+/*    height: 45px;*/
+/*    padding: 10px 0;*/
+/*    top: 90px;*/
+/*    background: #FFFFFF;*/
+/*    border: 2px solid #000000;*/
+/*    box-sizing: border-box;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.mapboxgl-popup-content h3 {*/
+/*    position: absolute;*/
+/*    width: 240px;*/
+/*    height: 69px;*/
+/*    padding: 20px 0;*/
+/*    top: 124px;*/
+/*    background: #FFFFFF;*/
+/*    border: 2px solid #000000;*/
+/*    box-sizing: border-box;*/
+/*    font-size: 24px;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.mapboxgl-popup-content h4 {*/
+/*    position: absolute;*/
+/*    width: 120px;*/
+/*    height: 70px;*/
+/*    padding: 20px 0;*/
+/*    top: 199px;*/
+/*    background: #FFFFFF;*/
+/*    border-style: solid;*/
+/*    border-width: 2px 2px 1px 2px;*/
+/*    box-sizing: border-box;*/
+/*    text-align: center;*/
+/*}*/
+
+/*.mapboxgl-popup-content h5 {*/
+/*    position: absolute;*/
+/*    width: 120px;*/
+/*    height: 70px;*/
+/*    padding: 20px 0;*/
+/*    top: 198px;*/
+/*    left: 130px;*/
+/*    background: #FFFFFF;*/
+/*    border-style: solid;*/
+/*    border-width: 2px 2px 2px 1px;*/
+/*    box-sizing: border-box;*/
+/*    text-align: center;*/
+/*}*/
