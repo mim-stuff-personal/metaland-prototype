@@ -21,7 +21,6 @@ map.addControl(new mapboxgl.NavigationControl());
 map.on('load', () => {
     map.addSource('metaland-jg-land-cleaned', {
         type: 'vector',
-        // url: 'mapbox://jihoonpark.a2oddiad'
         url: 'mapbox://jihoonpark.asfot8bv'
     });
 
@@ -55,17 +54,21 @@ map.on('click', 'jg-land-cleaned', e => {
     new mapboxgl.Popup()
         .setLngLat(e.lngLat)
         .setHTML(
-            '<h1>TOTAL PRICE</h1>' +
-            '<h2>' + 'KRW ' +
+            '<h1>' + 'Land ID ' +
+            e.features[0].properties.fid +
+            '</h1>' +
+            '<h2>' + '₩' +
             e.features[0].properties.A9 +
             '</h2>' +
-            '<h3>NINJA TURTLE</h3>' +
-            '<h4>' + 'KRW ' +
-            e.features[0].properties.thrsqmp +
+            '<h3>Owner ID</h3>' +
+            '<h4>' + '₩' +
+            e.features[0].properties.thrsqmp + '/평' +
             '</h4>' +
-            '<h5>' + 'KRW ' +
-            e.features[0].properties.thrsqmp +
-            '</h5>')
+            '<h5>' + '₩' +
+            e.features[0].properties.AREA +
+            '</h5>' +
+            '<h6>TO LET</h6>')
+
         .addTo(map);
 });
 
