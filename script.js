@@ -91,7 +91,8 @@ map.on('mousemove', 'jg-land-cleaned', (e) => {
             {
                 source: 'metaland-jg-land-cleaned',
                 sourceLayer: 'jg_land_cleaned',
-                id: landID},
+                id: landID
+            },
             {
                 hover: true
             }
