@@ -10,7 +10,6 @@ const map = new mapboxgl.Map({
     bearing: 0
 });
 
-
 // Disable map rotation with mouse rmb and touch
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
@@ -19,11 +18,11 @@ map.touchZoomRotate.disableRotation();
 map.addControl(new mapboxgl.NavigationControl());
 
 // JG lot polygon data
-
 map.on('load', () => {
     map.addSource('metaland-jg-land-cleaned', {
         type: 'vector',
-        url: 'mapbox://jihoonpark.a2oddiad'
+        // url: 'mapbox://jihoonpark.a2oddiad'
+        url: 'mapbox://jihoonpark.asfot8bv'
     });
 
     map.addLayer({
@@ -39,11 +38,19 @@ map.on('load', () => {
                     [18, 0.85]
                 ]
             },
-            'fill-color': '#bfd7fd',
+            'fill-color': [
+                'case',
+                ['boolean',
+                    ['feature-state', 'hover'],
+                    false
+                ],
+                '#9d9d9d', '#bfd7fd'
+            ]
         },
     });
 });
 
+// Popup on click
 map.on('click', 'jg-land-cleaned', e => {
     new mapboxgl.Popup()
         .setLngLat(e.lngLat)
@@ -62,18 +69,53 @@ map.on('click', 'jg-land-cleaned', e => {
         .addTo(map);
 });
 
+// Hover JG land to highlight
+let landID = null;
 
-// Change pointer when entering/leaving land layer
-map.on('mouseenter', 'jg-land-cleaned', () => {
-    map.getCanvas().style.cursor = 'pointer';
+map.on('mousemove', 'jg-land-cleaned', (e) => {
+    if (e.features.length > 0) {
+        if (landID !== null) {
+            map.setFeatureState(
+                {
+                    source: 'metaland-jg-land-cleaned',
+                    sourceLayer: 'jg_land_cleaned',
+                    id: landID
+                },
+                {
+                    hover: false
+                }
+            );
+        }
+        landID = e.features[0].id;
+        map.setFeatureState(
+            {
+                source: 'metaland-jg-land-cleaned',
+                sourceLayer: 'jg_land_cleaned',
+                id: landID},
+            {
+                hover: true
+            }
+        );
+    }
 });
 
 map.on('mouseleave', 'jg-land-cleaned', () => {
-    map.getCanvas().style.cursor = '';
+    if (landID !== null) {
+        map.setFeatureState(
+            {
+                source: 'metaland-jg-land-cleaned',
+                sourceLayer: 'jg_land_cleaned',
+                id: landID
+            },
+            {
+                hover: false
+            }
+        );
+    }
+    landID = null;
 });
 
-
-// JG lot boundary line data
+// JG land boundary line data
 map.on('load', () => {
     map.addSource('metaland-jg-land-outline', {
         type: 'vector',
