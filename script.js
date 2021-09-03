@@ -4,10 +4,11 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/jihoonpark/ckssk2lbdtllk17lytxaqjevr',
     center: [126.99017577700266, 37.55397103093888],
     zoom: 14,
-    maxZoom: 19,
+    maxZoom: 18,
     minZoom: 10,
-    pitch: 45,
-    bearing: 0
+    pitch: 55,
+    bearing: 0,
+    antialias: true
 });
 
 // Fly to Song-Do
@@ -58,10 +59,10 @@ map.on('load', () => {
         'source-layer': 'jg_sd_land_mb',
         'paint': {
             "fill-opacity": {
-                'base': 0.65,
+                'base': 0.25,
                 'stops': [
-                    [16, 0.65],
-                    [18, 0.85]
+                    [16, 0.25],
+                    [18, 0.45]
                 ]
             },
             'fill-color': [
@@ -70,7 +71,7 @@ map.on('load', () => {
                     ['feature-state', 'hover'],
                     false
                 ],
-                '#9d9d9d', '#bfd7fd'
+                '#573941', '#301f24'
             ]
         },
     });
@@ -173,6 +174,24 @@ map.on('load', () => {
 
 // JG building polygon data
 
+// map.on('load', () => {
+//     map.addSource('metaland-jg-sd-bld', {
+//         type: 'vector',
+//         url: 'mapbox://jihoonpark.0y2txant'
+//     });
+//     map.addLayer({
+//         'id': 'jg-sd-bld',
+//         'type': 'fill-extrusion',
+//         'source': 'metaland-jg-sd-bld',
+//         'source-layer': 'jg_sd_bld_mb',
+//         'paint': {
+//             'fill-extrusion-color': '#ffffff',
+//             'fill-extrusion-height': ['get', 'GRO_FLO_CO'],
+//             'fill-extrusion-opacity': 0.55
+//         },
+//     });
+// });
+
 map.on('load', () => {
     map.addSource('metaland-jg-sd-bld', {
         type: 'vector',
@@ -183,10 +202,19 @@ map.on('load', () => {
         'type': 'fill-extrusion',
         'source': 'metaland-jg-sd-bld',
         'source-layer': 'jg_sd_bld_mb',
-        'paint': {
-            'fill-extrusion-color': '#ffffff',
-            'fill-extrusion-height': ['get', 'GRO_FLO_CO'],
-            'fill-extrusion-opacity': 0.55
+            'paint': {
+                'fill-extrusion-color': '#eed247',
+                'fill-extrusion-height': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    14,
+                    0,
+                    14.05,
+                    ['get', 'NEW_FLO_CO']
+                ],
+                'fill-extrusion-opacity': 0.45
+            }
         },
-    });
+    );
 });
