@@ -71,7 +71,7 @@ map.on('load', () => {
                     ['feature-state', 'hover'],
                     false
                 ],
-                '#573941', '#301f24'
+                '#301f24' , '#80525f'
             ]
         },
     });
@@ -99,7 +99,7 @@ map.on('click', 'jg-sd-land', e => {
         .addTo(map);
 });
 
-// Hover JG land to highlight
+// Hover land to highlight
 let landID = null;
 
 map.on('mousemove', 'jg-sd-land', (e) => {
@@ -192,6 +192,7 @@ map.on('load', () => {
 //     });
 // });
 
+// JG building polygon data
 map.on('load', () => {
     map.addSource('metaland-jg-sd-bld', {
         type: 'vector',
@@ -213,7 +214,7 @@ map.on('load', () => {
                     14.05,
                     ['get', 'NEW_FLO_CO']
                 ],
-                'fill-extrusion-opacity': 0.45
+                'fill-extrusion-opacity': 0.25
             }
         },
     );
