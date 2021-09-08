@@ -4,12 +4,62 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/jihoonpark/ckssk2lbdtllk17lytxaqjevr',
     center: [126.99017577700266, 37.55397103093888],
     zoom: 14,
-    maxZoom: 18,
+    maxZoom: 22,
     minZoom: 10,
     pitch: 55,
     bearing: 0,
     antialias: true
 });
+
+// const geocoder = new MapboxGeocoder({
+//         accessToken: mapboxgl.accessToken,
+//         countries: 'kr',
+//         language: 'ko',
+//         autocomplete: false,
+//         proximity: [126.99017577700266, 37.55397103093888],
+//         placeholder: 'Search',
+//         fuzzyMatch: false,
+//         mapboxgl: mapboxgl
+//     });
+
+// document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+// Map navigation controls
+map.addControl(
+    new mapboxgl.NavigationControl());
+
+// Toggle Satellite View
+map.on('load', function(){
+    var switchy = document.getElementById('togglesat');
+    switchy.addEventListener("click", function(){
+        switchy = document.getElementById('togglesat');
+        if (switchy.className === 'on') {
+            switchy.setAttribute('class', 'off');
+            map.setLayoutProperty('satellite-saturated', 'visibility', 'none');
+            switchy.innerHTML = 'ENABLE SATELLITE VIEW';
+        } else {
+            switchy.setAttribute('class', 'on');
+            map.setLayoutProperty('satellite-saturated', 'visibility', 'visible');
+            switchy.innerHTML = 'DISABLE SATELLITE VIEW';
+        }
+    });
+});
+
+// let isDarkMode = null;
+//
+// document.getElementById("darkmode").addEventListener('click', () => {
+//     isDarkMode = !isDarkMode;
+//     const darkmodeBitch = document.getElementById("darkmode-bitch");
+//     if(isDarkMode) {
+//         darkmodeBitch.innerHTML = "ON";
+//         if (map) {
+//
+//         }
+//     } else {
+//         darkmodeBitch.innerHTML = "OFF";
+//     }
+// });
+
 
 // Fly to Song-Do
 document.getElementById('flysd').addEventListener('click', () => {
@@ -19,7 +69,7 @@ document.getElementById('flysd').addEventListener('click', () => {
     });
 });
 
-// Fly to a Jung-Gu
+// Fly to Jung-Gu
 document.getElementById('flyjg').addEventListener('click', () => {
     map.flyTo({
         center: [126.99017577700266, 37.55397103093888],
@@ -27,25 +77,22 @@ document.getElementById('flyjg').addEventListener('click', () => {
     });
 });
 
-// Change basemap style
-const layerList = document.getElementById('menu');
-const inputs = layerList.getElementsByTagName('input');
-
-for (const input of inputs) {
-    input.onclick = (layer) => {
-        const layerId = layer.target.id;
-        map.setStyle('mapbox://styles/jihoonpark/' + layerId);
-    };
-}
+// // Change basemap style
+// const layerList = document.getElementById('menu');
+// const inputs = layerList.getElementsByTagName('input');
+//
+// for (const input of inputs) {
+//     input.onclick = (layer) => {
+//         const layerId = layer.target.id;
+//         map.setStyle('mapbox://styles/jihoonpark/' + layerId);
+//     };
+// }
 
 // Disable map rotation with mouse rmb and touch
-map.dragRotate.disable();
-map.touchZoomRotate.disableRotation();
+// map.dragRotate.disable();
+// map.touchZoomRotate.disableRotation();
 
-// Map navigation controls
-map.addControl(new mapboxgl.NavigationControl());
-
-// JG lot polygon data
+// JG land polygon data
 map.on('load', () => {
     map.addSource('metaland-jg-sd-land', {
         type: 'vector',
@@ -59,10 +106,10 @@ map.on('load', () => {
         'source-layer': 'jg_sd_land_mb',
         'paint': {
             "fill-opacity": {
-                'base': 0.25,
+                'base': 0.55,
                 'stops': [
-                    [16, 0.25],
-                    [18, 0.45]
+                    [16, 0.55],
+                    [17, 0.95]
                 ]
             },
             'fill-color': [
@@ -77,31 +124,27 @@ map.on('load', () => {
     });
 });
 
+// map.on('click', 'jg-sd-land', (e) => {
+//     map.flyTo({
+//         center: e.features[0].geometry.coordinates
+//     });
+// });
+
 // Popup on click
 map.on('click', 'jg-sd-land', e => {
     new mapboxgl.Popup()
         .setLngLat(e.lngLat)
         .setHTML(
-            '<h1>' + 'Land ID ' +
-            e.features[0].properties.fid +
-            '</h1>' +
-            '<h2>' + '₩ ' +
-            e.features[0].properties.value +
-            '</h2>' +
-            '<h3>Owner ID</h3>' +
-            '<h4>' + '₩' +
-            e.features[0].properties.unitvalue + '/unit' +
-            '</h4>' +
-            '<h5>' +
-            e.features[0].properties.unit + ' units' +
-            '</h5>' +
-            '<h6>TO LET</h6>')
+            '<h1>' + '#' + e.features[0].properties.fid + '</h1>' +
+            '<h3>Owner </h3>' + '<h2>Spongebob</h2>' + '<hr class="solid-border">' +
+            '<h3>Total Value</h3>' + '<h2>' + e.features[0].properties.value_ml + ' MLND' + '</h2>' + '<hr class="solid-border">' +
+            '<h3>Unit Value</h3>' + '<h2>' + e.features[0].properties.uvalue_ml + ' MLND' +'</h2>' + '<hr class="solid-border">' +
+            '<h3>Area</h3>' + '<h2>' + e.features[0].properties.area_ml + ' Units' + '</h2>' + '<hr class="solid-border">')
         .addTo(map);
 });
 
 // Hover land to highlight
 let landID = null;
-
 map.on('mousemove', 'jg-sd-land', (e) => {
     if (e.features.length > 0) {
         if (landID !== null) {
@@ -130,7 +173,7 @@ map.on('mousemove', 'jg-sd-land', (e) => {
     }
 });
 
-map.on('mouseleave', 'metaland-jg-sd-land', () => {
+map.on('mouseleave', 'jg-sd-land', () => {
     if (landID !== null) {
         map.setFeatureState(
             {
@@ -146,7 +189,7 @@ map.on('mouseleave', 'metaland-jg-sd-land', () => {
     landID = null;
 });
 
-// JG land boundary line data
+// ROI land boundary line data
 map.on('load', () => {
     map.addSource('metaland-jg-sd-land-outline', {
         type: 'vector',
@@ -172,27 +215,7 @@ map.on('load', () => {
     });
 });
 
-// JG building polygon data
-
-// map.on('load', () => {
-//     map.addSource('metaland-jg-sd-bld', {
-//         type: 'vector',
-//         url: 'mapbox://jihoonpark.0y2txant'
-//     });
-//     map.addLayer({
-//         'id': 'jg-sd-bld',
-//         'type': 'fill-extrusion',
-//         'source': 'metaland-jg-sd-bld',
-//         'source-layer': 'jg_sd_bld_mb',
-//         'paint': {
-//             'fill-extrusion-color': '#ffffff',
-//             'fill-extrusion-height': ['get', 'GRO_FLO_CO'],
-//             'fill-extrusion-opacity': 0.55
-//         },
-//     });
-// });
-
-// JG building polygon data
+// ROI building polygon data
 map.on('load', () => {
     map.addSource('metaland-jg-sd-bld', {
         type: 'vector',
